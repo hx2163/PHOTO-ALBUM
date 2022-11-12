@@ -1,3 +1,6 @@
+#Overview
+Implement a photo album web application, that can be searched using natural language through both text and voice. You will learn how to use Lex, ElasticSearch, and Rekognition to create an intelligent search layer to query your photos for people, objects, actions, landmarks and more.
+
 # Prerequisites
 For the JavaScript SDK to work your APIs need to support CORS. The Amazon API Gateway developer guide explains how to [setup CORS for an endpoint]().
 The generated SDK depends on third-party libraries. Include all of the scripts in your webpage
