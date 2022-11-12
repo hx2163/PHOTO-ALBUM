@@ -7,9 +7,9 @@ from botocore.vendored import requests
 from datetime import *
 from requests.auth import HTTPBasicAuth
 
-ES_HOST = 'https://search-photos-eq7n6u5to5mf3imigsbo4rnmt4.us-east-1.es.amazonaws.com/'
+ES_HOST = 'ESURL'
 REGION = 'us-east-1'
-basic = HTTPBasicAuth("hx2163","J@indong025")
+basic = HTTPBasicAuth("USER","Password")
 
 
 def get_url(index, type):
@@ -61,7 +61,7 @@ def lambda_handler(event, context):
         
     print("Success: ", req)
     return {
-        'statusCode': 201,
+        'statusCode': 200,
         'headers': {
             "Access-Control-Allow-Origin": "*",
             'Content-Type': 'application/json'
