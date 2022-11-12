@@ -6,9 +6,9 @@ import uuid
 import time
 from botocore.vendored import requests
 from requests.auth import HTTPBasicAuth
-basic = HTTPBasicAuth('hx2163','J@indong025')
+basic = HTTPBasicAuth('USER','Password')
 
-ES_URL = 'https://search-photos-eq7n6u5to5mf3imigsbo4rnmt4.us-east-1.es.amazonaws.com/photos/Photo'
+ES_URL = 'ESURL'
 REGION = 'us-east-1'
 
 
