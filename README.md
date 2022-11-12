@@ -81,5 +81,6 @@ var apigClient = apigClientFactory.newClient({
 });
 ```
 
-
+# Architecture View
+![image](https://github.com/hx2163/nyu-fall2022-cc-hw2/blob/main/Architecture.png)
 
