@@ -69,7 +69,7 @@ function uploadPhoto() {
         }
     }
 
-    url = "https://dkjgsp69vl.execute-api.us-east-1.amazonaws.com/dev/upload/hx2163-nyu-cloud-photo-b2/" + file.name
+    url = "APIGATEWAYURL" + file.name
     axios.put(url, file, additionalParams).then(response => {
         alert("Image uploaded: " + file.name);
     });
