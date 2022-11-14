@@ -1,0 +1,18 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo "Entering install..."
+  build:
+    commands:
+      - echo "Zipping lambda functions..."
+      - zip -r Archive.zip index-photo.py search-photo.py
+  post_build:
+    commands:
+      - echo "Updating lambda function..."
+      - aws lambda update-function-code --function-name cfn_lambda --zip-file fileb://Archive.zip
+      - echo "Updating done!"
+artifacts:
+  type: zip
+  files:
+    - AWS.yml

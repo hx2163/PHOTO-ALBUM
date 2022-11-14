@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  ElasticsearchDomain:
+    Type: AWS::Elasticsearch::Domain
+    Properties:
+      DomainName: 'template'
+      ElasticsearchVersion: '7.10'
+      ElasticsearchClusterConfig:
+        DedicatedMasterEnabled: true
+        InstanceCount: '2'
+        ZoneAwarenessEnabled: true
+        InstanceType: 'm3.medium.elasticsearch'
+        DedicatedMasterType: 'm3.medium.elasticsearch'
+        DedicatedMasterCount: '3'
+      EBSOptions:
+        EBSEnabled: true
+        Iops: '0'
+        VolumeSize: '20'
+        VolumeType: 'gp2'
+      
+
+  ApiGatewayAccount:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Name: restApi
