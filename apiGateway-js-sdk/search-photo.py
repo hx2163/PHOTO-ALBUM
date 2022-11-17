@@ -6,6 +6,8 @@ import uuid
 import time
 from botocore.vendored import requests
 from requests.auth import HTTPBasicAuth
+# import inflect
+
 basic = HTTPBasicAuth('USER','Password')
 
 ES_URL = 'ESURL'
@@ -18,6 +20,37 @@ region = 'us-east-1'
 lex = boto3.client('lex-runtime', region_name=region)
 
 
+SINGULAR_UNINFLECTED = ['gas', 'asbestos', 'womens', 'childrens', 'sales', 'physics']
+
+SINGULAR_SUFFIX = [
+    ('people', 'person'),
+    ('men', 'man'),
+    ('wives', 'wife'),
+    ('menus', 'menu'),
+    ('leaves', 'leaf'),
+    ('us', 'us'),
+    ('ss', 'ss'),
+    ('is', 'is'),
+    ("'s", "'s"),
+    ('ies', 'y'),
+    ('ies', 'y'),
+    ('es', 'e'),
+    ('s', '')
+]
+def singularize_word(word):
+    for ending in SINGULAR_UNINFLECTED:
+        if word.lower().endswith(ending):
+            return word
+    for suffix, singular_suffix in SINGULAR_SUFFIX:
+        if word.endswith(suffix):
+            return word[:-len(suffix)] + singular_suffix
+    return word
+
+def singular_labels(labels):
+    for label in labels:
+        singularize_word(label)
+    return labels
+
 def lambda_handler(event, context):
 
     print("EVENT --- {}".format(json.dumps(event)))
@@ -25,20 +58,37 @@ def lambda_handler(event, context):
     # if(q1 == "searchAudio"):
     #     q1 = convert_speechtotext()
 
+    # p = inflect.engine()
+
     print("q1:", q1)
+    singularize_word(q1)
     labels = get_labels(q1)
+    single_labels = [singularize_word(plural) for plural in labels]
+
+    word = "cats"
+    cat = singularize_word(word)
+    
+    print("single_cat", single_labels)
+
+
+    # for label in labels:
+    #     singularize_word(label)
+    #     print(label)
+    
+    print("single_label", single_labels)
+
     print("labels", labels)
-    if len(labels) == 0:
+    if len(single_labels) == 0:
         return
     else:
-        img_paths = get_photo_path(labels)
+        img_paths = get_photo_path(single_labels)
 
     return {
         'statusCode': 200,
         'body': json.dumps({
             'imagePaths': img_paths,
             'userQuery': q1,
-            'labels': labels,
+            'labels': single_labels,
         }),
         'headers': {
             'Access-Control-Allow-Origin': '*'
